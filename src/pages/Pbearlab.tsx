@@ -15,7 +15,7 @@ export default function Pbearlab() {
         <title>PbearLab — Innovation &amp; Security</title>
         <meta
           name="description"
-          content="PbearLab is an independent practice in Auckland combining applied AI, cybersecurity, software development and community IT support."
+          content="PbearLab is an independent practice in Auckland combining applied AI, cybersecurity, web development and community IT support."
         />
       </Head>
 
@@ -30,7 +30,7 @@ export default function Pbearlab() {
           </h1>
           <p className="mt-7 max-w-[700px] text-[22px] text-mist-text">
             PbearLab is an independent practice in Auckland combining applied AI, cybersecurity,
-            software development and community IT support.
+            web development and community IT support.
           </p>
           <div className="mt-9 flex flex-wrap gap-3.5">
             <Button href="#contact">Tell us about your project</Button>

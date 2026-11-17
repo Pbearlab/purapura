@@ -1,0 +1,48 @@
+# Builds the site and copies it to the VPS (purapura.online) on every push to main.
+# The only secret needed is DEPLOY_SSH_KEY: the private key for the `deploy` user on the server.
+
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+env:
+  DEPLOY_HOST: 85.31.235.150
+  DEPLOY_USER: deploy
+  DEPLOY_PATH: /var/www/purapura/
+  # Server's SSH host key, pinned so the deploy only ever talks to our VPS
+  DEPLOY_KNOWN_HOSTS: 85.31.235.150 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMGv7u1er27lmAvy0KfZ904sr6XFUoWTE/0QXOZeFxWN
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build
+
+      - name: Set up SSH
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          echo "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
+
+      - name: Upload to the server
+        run: |
+          rsync -rlz --delete --chmod=D755,F644 \
+            -e "ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes" \
+            dist/ "$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH"

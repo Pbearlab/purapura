@@ -2,7 +2,7 @@
 
 A small static website for the free **Digital Skills for Rānui** community programme, run by Hans Wang
 and Nina Gao at Rānui Action Project (supported by the Purapura Community Fund). It is hosted under
-**pbearlab.co.nz** and also promotes PbearLab (applied AI, cybersecurity, software development,
+**pbearlab.co.nz** and also promotes PbearLab (applied AI, cybersecurity, web development,
 community IT support).
 
 ## Who uses it
@@ -53,4 +53,11 @@ There is no backend. `npm run build` outputs plain files in `dist/`.
 
 ## Deploying
 
-Static files only. Copy `dist/` to the web server (nginx or similar).
+Live at https://purapura.online. Every push to `main` runs `.github/workflows/deploy.yml`, which builds the
+site and rsyncs `dist/` to `/var/www/purapura` on the Hostinger VPS (85.31.235.150) as the `deploy` user
+(GitHub secret `DEPLOY_SSH_KEY`).
+
+The VPS also runs **mailcow** (live email for pbearlab.co.nz), and mailcow's own nginx container serves
+the site. Server-side files: `/root/mailcow-dockerized/data/conf/nginx/purapura.conf`,
+`docker-compose.override.yml` (mounts the web folder) and `ADDITIONAL_SAN` in `mailcow.conf` (HTTPS
+certificate). Be careful there: changing the certificate restarts postfix and dovecot.
