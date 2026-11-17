@@ -1,0 +1,38 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/space-grotesk';
+
+/* Design tokens. Change a colour here and it changes everywhere. */
+@theme {
+  --font-sans: 'Inter Variable', system-ui, sans-serif;
+  --font-display: 'Space Grotesk Variable', system-ui, sans-serif;
+
+  --color-paper: #fafaf7;
+  --color-ink: #0e2233;
+  --color-ink-deep: #0a1825;
+  --color-ink-soft: #17344b;
+  --color-ice: #e6f0f4;
+  --color-ice-line: #b9cbd3;
+  --color-line: #d5dee3;
+  --color-muted: #46586a;
+  --color-lab: #1b7f8c;
+  --color-lab-deep: #12606b;
+  --color-mist: #8fd0db;
+  --color-mist-text: #d5e3ea;
+  --color-sun: #f2a33a;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-paper font-sans text-lg leading-relaxed text-ink antialiased;
+  }
+  a {
+    @apply text-lab-deep hover:text-ink;
+  }
+  :focus-visible {
+    @apply outline-3 outline-offset-2 outline-lab;
+  }
+}
