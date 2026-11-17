@@ -53,4 +53,4 @@ There is no backend. `npm run build` outputs plain files in `dist/`.
 
 ## Deploying
 
-Static files only. Copy `dist/` to the web server (nginx or similar). See README.md.
+Static files only. Copy `dist/` to the web server (nginx or similar).

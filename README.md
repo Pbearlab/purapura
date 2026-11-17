@@ -38,48 +38,6 @@ Most changes need no coding. Edit these files:
 
 Anything in `[SQUARE BRACKETS]` is a placeholder. A link left empty (`''`) shows "coming soon".
 
-## Still to fill in
-
-- [ ] YouTube channel link and each month's playlist link
-- [x] Rānui Action Project street address
-- [x] Contact email and phone
-- [ ] Check the PbearLab service wording and bio
-- [ ] Decide where the forms send messages (see below)
-- [ ] Logos and images, only with permission from the organisations that own them
-
-## The forms
-
-Until you set `formEndpoint` in `src/content/site.ts`, the forms open the visitor's email app with their
-message filled in. If you later add a place to receive submissions (a small endpoint on your server, or a
-form service), put its URL in `formEndpoint`. The form will then POST JSON with `subject` and the field
-values.
-
-## Build and deploy
-
-```
-npm run build      # type-checks, builds and pre-renders into dist/
-npm run preview    # check the built site locally
-```
-
-Copy everything inside `dist/` to your web server. Example nginx settings for a static site:
-
-```nginx
-server {
-    server_name pbearlab.co.nz;
-    root /var/www/pbearlab/dist;
-    index index.html;
-
-    location / {
-        try_files $uri $uri/ =404;
-    }
-    error_page 404 /index.html;   # simple fallback; replace with a dedicated 404 page if you add one
-}
-```
-
-Each page is a folder with an `index.html` (for example `/videos/index.html`), so addresses like
-`/videos` and `/friday-help` work as they are. If the site lives in a sub-folder or a subdomain, tell
-Claude Code, because the `base` setting in `vite.config.ts` may need changing.
-
 ## Scripts
 
 | Command           | What it does                  |
